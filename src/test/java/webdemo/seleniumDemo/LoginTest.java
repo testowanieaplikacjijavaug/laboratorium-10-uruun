@@ -50,4 +50,23 @@ public class LoginTest {
         driver.findElement(By.xpath("//button[@name=\"login\"]")).click();
         assertNotNull(driver.findElement(By.className("woocommerce-MyAccount-navigation")));
     }
+
+    @Test
+    public void testWorngLogin() {
+        String link = driver.findElement(By.className("menu-item-22")).findElement(By.tagName("a")).getAttribute("href");
+        driver.navigate().to(link);
+        driver.findElement(By.xpath("//input[@id=\"username\"]")).sendKeys("slorumutho@mywrld.top");
+        driver.findElement(By.xpath("//input[@id=\"password\"]")).sendKeys("TestTset!@34");
+        driver.findElement(By.xpath("//button[@name=\"login\"]")).click();
+        assertNotNull(driver.findElement(By.className("woocommerce-error")));
+    }
+    @Test
+    public void testWorngPass() {
+        String link = driver.findElement(By.className("menu-item-22")).findElement(By.tagName("a")).getAttribute("href");
+        driver.navigate().to(link);
+        driver.findElement(By.xpath("//input[@id=\"username\"]")).sendKeys("slorumutho@mywrld.top");
+        driver.findElement(By.xpath("//input[@id=\"password\"]")).sendKeys("TestTset!@34");
+        driver.findElement(By.xpath("//button[@name=\"login\"]")).click();
+        assertNotNull(driver.findElement(By.className("woocommerce-error")));
+    }
 }
