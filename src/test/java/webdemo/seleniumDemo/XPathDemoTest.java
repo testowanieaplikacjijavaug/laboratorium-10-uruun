@@ -60,23 +60,22 @@ public class XPathDemoTest {
         assertEquals(2, list.size());
     }
 
-//    @Test
-//    @Ignore
-//    public void clickAllTheLinks() {
-//        List<WebElement> list = driver.findElements(By.xpath("//a"));
-//        int linksCount = list.size();
-//        String[] links = new String[linksCount];
-//        for(int i = 0; i < linksCount; i++) {
-//            links[i] = list.get(i).getAttribute("href");
-//        }
-//        for(int i = 0; i < linksCount; i++) {
-//            driver.navigate().to(links[i]);
-//            driver.navigate().back();
-//        }
-//    }
+    @Test
+    public void clickAllTheLinks() {
+        List<WebElement> list = driver.findElements(By.xpath("//a"));
+        int linksCount = list.size();
+        String[] links = new String[linksCount];
+        for(int i = 0; i < linksCount; i++) {
+            links[i] = list.get(i).getAttribute("href");
+        }
+        for(int i = 0; i < linksCount; i++) {
+            driver.navigate().to(links[i]);
+            driver.navigate().back();
+        }
+    }
 
     @Test
-    public void clickFormTextFields() throws InterruptedException {
+    public void checkFormTextFields() throws InterruptedException {
         List<WebElement> list = driver.findElement(By.xpath("//form")).findElements(By.xpath("//input[@type=\"text\"]"));
         assertEquals(4, list.size());
     }
