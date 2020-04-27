@@ -4,14 +4,14 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
 
-import java.util.ArrayList;
+import java.time.Duration;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.*;
@@ -24,7 +24,9 @@ public class DDGTest {
     @BeforeAll
     public static void setUpDriver(){
         System.setProperty("webdriver.gecko.driver", "resources/geckodriver");
-        driver = new FirefoxDriver();
+        FirefoxOptions options = new FirefoxOptions();
+        options.setHeadless(true);
+        driver = new FirefoxDriver(options);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
@@ -58,9 +60,10 @@ public class DDGTest {
 
     // inna metoda na klikniecie: submit() zamiast click()
     @Test
-    public void testSubmit(){
+    public void testSubmit() throws InterruptedException {
         driver.findElement(By.id("search_form_input_homepage")).sendKeys("Koty");
-        driver.findElement(By.id("search_button_homepage")).submit();
+        driver.findElement(By.id("search_form_input_homepage")).sendKeys(Keys.ENTER);
+        Thread.sleep(3000);
         assertEquals("Koty at DuckDuckGo", driver.getTitle());
     }
 
@@ -83,10 +86,8 @@ public class DDGTest {
         driver.findElement(By.id("search_form_input_homepage")).sendKeys("Koty");
         driver.findElement(By.id("search_button_homepage")).click();
         List<WebElement> list = driver.findElements(By.className("result__a"));
-        list.get(0).click();
-        String url1 = driver.getCurrentUrl();
-        list.get(2).click();
-        String url3 = driver.getCurrentUrl();
+        String url1 = list.get(0).getText();
+        String url3 = list.get(2).getText();
         assertNotEquals(url1, url3);
     }
 

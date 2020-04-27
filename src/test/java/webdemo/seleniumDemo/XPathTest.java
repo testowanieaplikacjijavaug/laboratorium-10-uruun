@@ -8,6 +8,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -16,15 +17,14 @@ import static org.junit.Assert.assertNotNull;
 
 public class XPathTest {
 
-        //Przykłady znajdowania elementów na stronie www z wykorzystaniem xpath
-
         private static WebDriver driver;
 
         @BeforeAll
         public static void setUpDriver(){
             System.setProperty("webdriver.gecko.driver", "resources/geckodriver");
-            driver = new FirefoxDriver();
-            // Implicity wait -> max czas na znalezienie elementu na stronie
+            FirefoxOptions options = new FirefoxOptions();
+            options.setHeadless(true);
+            driver = new FirefoxDriver(options);
             driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         }
 
